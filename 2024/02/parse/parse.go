@@ -1,8 +1,8 @@
 package parse
 
 import (
+	"advent-of-code/2024/02/model"
 	"os"
-	"red-nosed-reports/model"
 	"strconv"
 	"strings"
 )

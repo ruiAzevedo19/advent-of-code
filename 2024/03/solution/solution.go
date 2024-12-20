@@ -1,7 +1,7 @@
 package solution
 
 import (
-	"mull-it-over/parse"
+	"advent-of-code/2024/03/parse"
 	"regexp"
 	"strconv"
 )

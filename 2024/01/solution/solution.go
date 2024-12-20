@@ -1,8 +1,8 @@
 package solution
 
 import (
-	"historian-hysteria/model"
-	"historian-hysteria/parse"
+	"advent-of-code/2024/01/model"
+	"advent-of-code/2024/01/parse"
 	"math"
 )
 

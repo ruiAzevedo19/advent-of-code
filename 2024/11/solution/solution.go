@@ -1,7 +1,7 @@
 package solution
 
 import (
-	"plutonian-pebbles/parse"
+	"advent-of-code/2024/11/parse"
 	"strconv"
 )
 

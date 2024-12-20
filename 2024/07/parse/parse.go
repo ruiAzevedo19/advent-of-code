@@ -1,7 +1,7 @@
 package parse
 
 import (
-	"bridge-repair/model"
+	"advent-of-code/2024/07/model"
 	"errors"
 	"os"
 	"strconv"

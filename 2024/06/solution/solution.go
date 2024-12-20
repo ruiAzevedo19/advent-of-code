@@ -1,8 +1,8 @@
 package solution
 
 import (
+	"advent-of-code/2024/06/parse"
 	"fmt"
-	"guard-gallivant/parse"
 )
 
 const (

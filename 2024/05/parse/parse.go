@@ -1,9 +1,9 @@
 package parse
 
 import (
+	"advent-of-code/2024/05/model"
 	"errors"
 	"os"
-	"print-queue/model"
 	"strconv"
 	"strings"
 )
