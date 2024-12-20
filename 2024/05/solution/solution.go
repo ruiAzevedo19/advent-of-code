@@ -3,9 +3,14 @@ package solution
 import (
 	"advent-of-code/2024/05/model"
 	"advent-of-code/2024/05/parse"
+	"advent-of-code/challenge"
 )
 
-func PrintQueue(filePath string) (result *Result, err error) {
+func init() {
+	challenge.Register("2024", "5", PrintQueue)
+}
+
+func PrintQueue(filePath string) (result challenge.Result, err error) {
 	parsedRules, updates, err := parse.Parse(filePath)
 	if err != nil {
 		return nil, err

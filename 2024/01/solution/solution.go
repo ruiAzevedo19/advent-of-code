@@ -3,10 +3,15 @@ package solution
 import (
 	"advent-of-code/2024/01/model"
 	"advent-of-code/2024/01/parse"
+	"advent-of-code/challenge"
 	"math"
 )
 
-func HistorianHysteria(filePath string) (result *Result, err error) {
+func init() {
+	challenge.Register("2024", "1", HistorianHysteria)
+}
+
+func HistorianHysteria(filePath string) (result challenge.Result, err error) {
 	locations, err := parse.Parse(filePath)
 	if err != nil {
 		return nil, err

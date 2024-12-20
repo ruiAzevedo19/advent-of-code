@@ -2,11 +2,16 @@ package solution
 
 import (
 	"advent-of-code/2024/03/parse"
+	"advent-of-code/challenge"
 	"regexp"
 	"strconv"
 )
 
-func MullItOver(filePath string) (result *Result, err error) {
+func init() {
+	challenge.Register("2024", "3", MullItOver)
+}
+
+func MullItOver(filePath string) (result challenge.Result, err error) {
 	corruptedMemory, err := parse.Parse(filePath)
 	if err != nil {
 		return nil, err

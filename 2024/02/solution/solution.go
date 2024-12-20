@@ -2,22 +2,31 @@ package solution
 
 import (
 	"advent-of-code/2024/02/parse"
+	"advent-of-code/challenge"
 )
 
-func RedNosedReports(filePath string) (result *Result, err error) {
+func init() {
+	challenge.Register("2024", "2", RedNosedReports)
+}
+
+func RedNosedReports(filePath string) (result challenge.Result, err error) {
 	reports, err := parse.Parse(filePath)
 	if err != nil {
 		return nil, err
 	}
 
-	result = &Result{}
+	var numberOfCorrectReports int
+	var numberOfFixedReports int
 	for _, report := range reports {
 		if report.IsSafe() {
-			result.NumberOfCorrectReports++
+			numberOfCorrectReports++
 		} else if report.CanBeSafe() {
-			result.NumberOfFixedReports++
+			numberOfFixedReports++
 		}
 	}
 
-	return result, nil
+	return &Result{
+		NumberOfCorrectReports: numberOfCorrectReports,
+		NumberOfFixedReports:   numberOfFixedReports,
+	}, nil
 }

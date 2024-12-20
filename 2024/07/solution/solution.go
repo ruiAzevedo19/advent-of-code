@@ -3,9 +3,14 @@ package solution
 import (
 	"advent-of-code/2024/07/model"
 	"advent-of-code/2024/07/parse"
+	"advent-of-code/challenge"
 )
 
-func BridgeRepair(filePath string) (result *Result, err error) {
+func init() {
+	challenge.Register("2024", "7", BridgeRepair)
+}
+
+func BridgeRepair(filePath string) (result challenge.Result, err error) {
 	equations, err := parse.Parse(filePath)
 	if err != nil {
 		return nil, err
