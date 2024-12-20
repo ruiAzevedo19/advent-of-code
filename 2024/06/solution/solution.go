@@ -2,8 +2,13 @@ package solution
 
 import (
 	"advent-of-code/2024/06/parse"
+	"advent-of-code/challenge"
 	"fmt"
 )
+
+func init() {
+	challenge.Register("2024", "6", GuardGallivant)
+}
 
 const (
 	BLOCK       = 'O'
@@ -13,7 +18,7 @@ const (
 )
 
 // Let's assume the grid is not empty and has at least one row.
-func GuardGallivant(filePath string) (result *Result, err error) {
+func GuardGallivant(filePath string) (result challenge.Result, err error) {
 	grid, err := parse.Parse(filePath)
 	if err != nil {
 		return nil, err

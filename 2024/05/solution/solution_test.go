@@ -31,8 +31,10 @@ func TestPrintQueue(t *testing.T) {
 			filePath := filepath.Join(workspace, tc.FilePath)
 			require.NoError(t, osutil.CopyFile(filepath.Join(testDataPath, tc.FilePath), filePath))
 
-			actualResult, actualErr := PrintQueue(filePath)
+			result, actualErr := PrintQueue(filePath)
 			require.NoError(t, actualErr)
+			actualResult, ok := result.(*Result)
+			require.True(t, ok)
 
 			assert.Equal(t, tc.ExpectedValidUpdates, actualResult.ValidUpdates)
 			assert.Equal(t, tc.ExpectedInvalidUpdates, actualResult.InvalidUpdates)

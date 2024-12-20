@@ -2,10 +2,15 @@ package solution
 
 import (
 	"advent-of-code/2024/04/parse"
+	"advent-of-code/challenge"
 )
 
+func init() {
+	challenge.Register("2024", "4", CeresSearch)
+}
+
 // Let's assume the grid is not empty and always has at least one row.
-func CeresSearch(filePath string) (result *Result, err error) {
+func CeresSearch(filePath string) (result challenge.Result, err error) {
 	grid, err := parse.Parse(filePath)
 	if err != nil {
 		return nil, err
