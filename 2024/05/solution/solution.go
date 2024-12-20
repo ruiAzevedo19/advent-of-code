@@ -1,8 +1,8 @@
 package solution
 
 import (
-	"print-queue/model"
-	"print-queue/parse"
+	"advent-of-code/2024/05/model"
+	"advent-of-code/2024/05/parse"
 )
 
 func PrintQueue(filePath string) (result *Result, err error) {

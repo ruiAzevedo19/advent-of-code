@@ -1,9 +1,9 @@
 package parse
 
 import (
+	"advent-of-code/2024/05/model"
 	"os"
 	"path/filepath"
-	"print-queue/model"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

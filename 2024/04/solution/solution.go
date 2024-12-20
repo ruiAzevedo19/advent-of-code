@@ -1,7 +1,7 @@
 package solution
 
 import (
-	"ceres-search/parse"
+	"advent-of-code/2024/04/parse"
 )
 
 // Let's assume the grid is not empty and always has at least one row.

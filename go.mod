@@ -1,10 +1,10 @@
-module mull-it-over
+module advent-of-code
 
 go 1.22.4
 
 require (
 	github.com/stretchr/testify v1.10.0
-	github.com/zimmski/osutil v1.2.0
+	github.com/zimmski/osutil v1.3.0
 )
 
 require (
@@ -17,6 +17,7 @@ require (
 	github.com/schollz/progressbar/v3 v3.14.2 // indirect
 	github.com/termie/go-shutil v0.0.0-20140729215957-bcacb06fecae // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
+	github.com/yuin/goldmark v1.7.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/term v0.17.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

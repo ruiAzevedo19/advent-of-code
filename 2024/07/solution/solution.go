@@ -1,8 +1,8 @@
 package solution
 
 import (
-	"bridge-repair/model"
-	"bridge-repair/parse"
+	"advent-of-code/2024/07/model"
+	"advent-of-code/2024/07/parse"
 )
 
 func BridgeRepair(filePath string) (result *Result, err error) {

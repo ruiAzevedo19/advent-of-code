@@ -1,7 +1,7 @@
 package solution
 
 import (
-	"red-nosed-reports/parse"
+	"advent-of-code/2024/02/parse"
 )
 
 func RedNosedReports(filePath string) (result *Result, err error) {

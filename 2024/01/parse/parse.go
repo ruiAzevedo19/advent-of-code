@@ -1,8 +1,8 @@
 package parse
 
 import (
+	"advent-of-code/2024/01/model"
 	"errors"
-	"historian-hysteria/model"
 	"os"
 	"strconv"
 	"strings"
