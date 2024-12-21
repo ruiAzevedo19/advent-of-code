@@ -4,41 +4,19 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
-	"github.com/zimmski/osutil"
+	challengetesting "advent-of-code/challenge/testing"
 )
 
 func TestGuardGallivant(t *testing.T) {
-	type testCase struct {
-		Name string
-
-		FilePath string
-
-		ExpectedResult *Result
+	validate := func(t *testing.T, tc *challengetesting.TestCaseChallenge) {
+		tc.Validate(t)
 	}
 
-	testDataPath := "testdata"
-
-	validate := func(t *testing.T, tc *testCase) {
-		t.Run(tc.Name, func(t *testing.T) {
-			workspace := t.TempDir()
-
-			testDataFilePath := filepath.Join(testDataPath, tc.FilePath)
-			filePath := filepath.Join(workspace, tc.FilePath)
-			require.NoError(t, osutil.CopyFile(testDataFilePath, filePath))
-
-			actualResult, actualErr := GuardGallivant(filePath)
-			require.NoError(t, actualErr)
-
-			assert.Equal(t, tc.ExpectedResult, actualResult)
-		})
-	}
-
-	validate(t, &testCase{
+	validate(t, &challengetesting.TestCaseChallenge{
 		Name: "Simple",
 
-		FilePath: "simple.txt",
+		FilePath: filepath.Join("testdata", "simple.txt"),
+		Solution: GuardGallivant,
 
 		ExpectedResult: &Result{
 			GuardDistinctLocations: 41,
