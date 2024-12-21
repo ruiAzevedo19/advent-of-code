@@ -8,5 +8,6 @@ import ( // Register solutions.
 	_ "advent-of-code/2024/05"
 	_ "advent-of-code/2024/06"
 	_ "advent-of-code/2024/07"
+	_ "advent-of-code/2024/08"
 	_ "advent-of-code/2024/11"
 )
