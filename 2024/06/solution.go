@@ -2,6 +2,7 @@ package solution
 
 import (
 	"advent-of-code/challenge"
+	"advent-of-code/util"
 	"fmt"
 )
 
@@ -18,7 +19,7 @@ const (
 
 // Let's assume the grid is not empty and has at least one row.
 func GuardGallivant(filePath string) (result challenge.Result, err error) {
-	grid, err := Parse(filePath)
+	grid, err := util.ParseGrid(filePath)
 	if err != nil {
 		return nil, err
 	}

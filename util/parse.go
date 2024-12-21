@@ -1,11 +1,11 @@
-package solution
+package util
 
 import (
 	"os"
 	"strings"
 )
 
-func Parse(filePath string) (grid [][]rune, err error) {
+func ParseGrid(filePath string) (grid [][]rune, err error) {
 	fileContent, err := os.ReadFile(filePath)
 	if err != nil {
 		return nil, err
