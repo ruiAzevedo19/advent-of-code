@@ -1,5 +1,7 @@
 package util
 
+import "fmt"
+
 type Coordinate struct {
 	Row    int
 	Column int
@@ -31,4 +33,11 @@ func EmptyGrid(rows int, columns int) (grid [][]rune) {
 	}
 
 	return grid
+}
+
+func PrintGrid(grid [][]rune) {
+	for _, row := range grid {
+		fmt.Println(row)
+	}
+	fmt.Println()
 }

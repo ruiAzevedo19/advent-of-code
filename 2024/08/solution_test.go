@@ -19,7 +19,8 @@ func TestResonantCollinearity(t *testing.T) {
 		Solution: ResonantCollinearity,
 
 		ExpectedResult: &Result{
-			NumberOfAntinodeLocations: 14,
+			NumberOfAntinodeLocations:             14,
+			NumberOfAntinodeLocationsUpdatedModel: 34,
 		},
 	})
 }

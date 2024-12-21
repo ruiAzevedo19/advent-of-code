@@ -20,15 +20,17 @@ func ResonantCollinearity(filePath string) (result challenge.Result, err error) 
 		return nil, err
 	}
 
-	numberOfAntinodeLocations := resonantCollinearity(grid)
+	antinodeLocations, antinodeLocationsUpdatedModel := resonantCollinearity(grid)
 
 	return &Result{
-		NumberOfAntinodeLocations: numberOfAntinodeLocations,
+		NumberOfAntinodeLocations:             antinodeLocations,
+		NumberOfAntinodeLocationsUpdatedModel: antinodeLocationsUpdatedModel,
 	}, nil
 }
 
-func resonantCollinearity(grid [][]rune) (numberOfAntinodeLocations int) {
+func resonantCollinearity(grid [][]rune) (antinodeLocations int, antinodeLocationsUpdatedModel int) {
 	antinodes := util.EmptyGrid(len(grid), len(grid[0]))
+	antinodesUpdatedModel := util.EmptyGrid(len(grid), len(grid[0]))
 
 	for row := range grid {
 		for column := range grid[row] {
@@ -44,14 +46,20 @@ func resonantCollinearity(grid [][]rune) (numberOfAntinodeLocations int) {
 			coordinates := findFrequencies(grid, grid[row][column])
 			for _, coordinate := range coordinates {
 				if currentCoordinate.Equals(coordinate) {
+					if antinodesUpdatedModel[row][column] != ANTINODE {
+						antinodesUpdatedModel[row][column] = ANTINODE
+						antinodeLocationsUpdatedModel++
+					}
+
 					continue
 				}
-				numberOfAntinodeLocations += createAntinodes(antinodes, currentCoordinate, coordinate)
+				antinodeLocations += createAntinodes(antinodes, currentCoordinate, coordinate)
+				antinodeLocationsUpdatedModel += createAntinodesUpdatedModel(antinodesUpdatedModel, currentCoordinate, coordinate)
 			}
 		}
 	}
 
-	return numberOfAntinodeLocations
+	return antinodeLocations, antinodeLocationsUpdatedModel
 }
 
 func findFrequencies(grid [][]rune, frequency rune) (coordinates []*util.Coordinate) {
@@ -89,6 +97,43 @@ func createAntinodes(antinodes [][]rune, x *util.Coordinate, y *util.Coordinate)
 	if antinodeY.IsValid(antinodes) && antinodes[antinodeY.Row][antinodeY.Column] != ANTINODE {
 		antinodes[antinodeY.Row][antinodeY.Column] = ANTINODE
 		numberOfAntinodeLocations++
+	}
+
+	return numberOfAntinodeLocations
+}
+
+func createAntinodesUpdatedModel(antinodes [][]rune, x *util.Coordinate, y *util.Coordinate) (numberOfAntinodeLocations int) {
+	dx := x.Row - y.Row
+	dy := x.Column - y.Column
+
+	antinodeX := &util.Coordinate{}
+	for i := 1; ; i++ {
+		antinodeX.Row = x.Row + i*dx
+		antinodeX.Column = x.Column + i*dy
+
+		if !antinodeX.IsValid(antinodes) {
+			break
+		}
+
+		if antinodes[antinodeX.Row][antinodeX.Column] != ANTINODE {
+			antinodes[antinodeX.Row][antinodeX.Column] = ANTINODE
+			numberOfAntinodeLocations++
+		}
+	}
+
+	antinodeY := &util.Coordinate{}
+	for i := 1; ; i++ {
+		antinodeY.Row = y.Row - i*dx
+		antinodeY.Column = y.Column - i*dy
+
+		if !antinodeY.IsValid(antinodes) {
+			break
+		}
+
+		if antinodes[antinodeY.Row][antinodeY.Column] != ANTINODE {
+			antinodes[antinodeY.Row][antinodeY.Column] = ANTINODE
+			numberOfAntinodeLocations++
+		}
 	}
 
 	return numberOfAntinodeLocations
