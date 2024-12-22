@@ -16,51 +16,54 @@ func HoofIt(filePath string) (result challenge.Result, err error) {
 	}
 
 	path := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-	trails := hoofIt(grid, path)
+	scores, ratings := hoofIt(grid, path)
 
 	return &Result{
-		Trails: trails,
+		Scores:  scores,
+		Ratings: ratings,
 	}, nil
 }
 
-func hoofIt(grid [][]int, path []int) (trails int) {
+func hoofIt(grid [][]int, path []int) (scores, ratings int) {
 	for i := range grid {
 		for j := range grid[i] {
 			if grid[i][j] != 0 {
 				continue
 			}
+
 			visited := util.EmptyGrid[bool](len(grid), len(grid[0]))
-			trails += findPath(visited, grid, i, j, path)
+			score, rating := findPath(visited, grid, i, j, path)
+			scores += score
+			ratings += rating
 		}
 	}
 
-	return trails
+	return scores, ratings
 }
 
-func findPath(visited [][]bool, grid [][]int, row int, column int, path []int) (trails int) {
-	if row < 0 || row >= len(grid) {
-		return 0
-	} else if column < 0 || column >= len(grid[0]) {
-		return 0
-	}
-
-	if grid[row][column] != path[0] {
-		return 0
+func findPath(visited [][]bool, grid [][]int, row int, column int, path []int) (scores, ratings int) {
+	if row < 0 || row >= len(grid) || column < 0 || column >= len(grid[0]) {
+		return 0, 0
+	} else if grid[row][column] != path[0] {
+		return 0, 0
 	}
 
 	if len(path) == 1 {
-		if visited[row][column] {
-			return 0
+		if !visited[row][column] {
+			visited[row][column] = true
+			scores++
 		}
-		visited[row][column] = true
 
-		return 1
+		return scores, 1
 	}
 
-	trailsUp := findPath(visited, grid, row-1, column, path[1:])
-	trailsLeft := findPath(visited, grid, row, column-1, path[1:])
-	trailsRight := findPath(visited, grid, row, column+1, path[1:])
-	trailsDown := findPath(visited, grid, row+1, column, path[1:])
+	scoresUp, ratingsUp := findPath(visited, grid, row-1, column, path[1:])
+	scoresDown, ratingsDown := findPath(visited, grid, row+1, column, path[1:])
+	scoresLeft, ratingsLeft := findPath(visited, grid, row, column-1, path[1:])
+	scoresRight, ratingsRight := findPath(visited, grid, row, column+1, path[1:])
 
-	return trailsLeft + trailsRight + trailsUp + trailsDown
+	scores = scoresUp + scoresDown + scoresLeft + scoresRight
+	ratings = ratingsUp + ratingsDown + ratingsLeft + ratingsRight
+
+	return scores, ratings
 }

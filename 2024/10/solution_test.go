@@ -19,7 +19,8 @@ func TestHoofIt(t *testing.T) {
 		Solution: HoofIt,
 
 		ExpectedResult: &Result{
-			Trails: 36,
+			Scores:  36,
+			Ratings: 81,
 		},
 	})
 }
