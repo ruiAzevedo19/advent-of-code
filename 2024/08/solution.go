@@ -29,8 +29,8 @@ func ResonantCollinearity(filePath string) (result challenge.Result, err error) 
 }
 
 func resonantCollinearity(grid [][]rune) (antinodeLocations int, antinodeLocationsUpdatedModel int) {
-	antinodes := util.EmptyGrid(len(grid), len(grid[0]))
-	antinodesUpdatedModel := util.EmptyGrid(len(grid), len(grid[0]))
+	antinodes := util.EmptyGrid[rune](len(grid), len(grid[0]))
+	antinodesUpdatedModel := util.EmptyGrid[rune](len(grid), len(grid[0]))
 
 	for row := range grid {
 		for column := range grid[row] {

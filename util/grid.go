@@ -26,10 +26,10 @@ func (c *Coordinate) IsValid(grid [][]rune) bool {
 	return true
 }
 
-func EmptyGrid(rows int, columns int) (grid [][]rune) {
-	grid = make([][]rune, rows)
+func EmptyGrid[T any](rows int, columns int) (grid [][]T) {
+	grid = make([][]T, rows)
 	for row := range grid {
-		grid[row] = make([]rune, columns)
+		grid[row] = make([]T, columns)
 	}
 
 	return grid
