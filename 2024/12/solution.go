@@ -51,27 +51,27 @@ func group(garden [][]rune, row int, column int, plant rune, visited [][]bool) (
 	visited[row][column] = true
 	area, perimeter, corners = calculateAreaPerimeter(garden, row, column)
 
-	areaUp, perimeterUp, cornersUp := group(garden, row-1, column, plant, visited)
-	areaRight, perimeterRight, cornersRight := group(garden, row, column+1, plant, visited)
-	areaDown, perimeterDown, cornersDown := group(garden, row+1, column, plant, visited)
-	areaLeft, perimeterLeft, cornersLeft := group(garden, row, column-1, plant, visited)
-
-	area += areaUp + areaRight + areaDown + areaLeft
-	perimeter += perimeterUp + perimeterRight + perimeterDown + perimeterLeft
-	corners += cornersUp + cornersRight + cornersDown + cornersLeft
+	for _, direction := range [][]int{{1, 0}, {0, 1}, {-1, 0}, {0, -1}} {
+		a, p, c := group(garden, row+direction[0], column+direction[1], plant, visited)
+		area, perimeter, corners = area+a, perimeter+p, corners+c
+	}
 
 	return area, perimeter, corners
 }
 
 func calculateAreaPerimeter(garden [][]rune, row int, column int) (area int, perimeter int, corners int) {
+	differs := func(x, y int) bool {
+		return garden[row][column] != garden[x][y]
+	}
+
 	calculatePerimeter := func(dx int, dy int) {
-		// Calculate perimenter.
 		if !util.RangeIsValid(garden, row+dx, column+dy) {
 			perimeter++
-		} else if garden[row][column] != garden[row+dx][column+dy] {
+		} else if differs(row+dx, column+dy) {
 			perimeter++
 		}
 	}
+
 	calculateCorners := func(dx int, dy int) {
 		ia, ja := row+dx, column
 		ib, jb := row, column+dy
@@ -84,39 +84,29 @@ func calculateAreaPerimeter(garden [][]rune, row int, column int) (area int, per
 		}
 
 		if util.RangeIsValid(garden, ia, ja) && util.RangeIsValid(garden, ib, jb) && util.RangeIsValid(garden, ic, jc) {
-			if garden[row][column] != garden[ia][ja] && garden[row][column] != garden[ib][jb] {
+			if differs(ia, ja) && differs(ib, jb) {
 				corners++
-			} else if garden[row][column] == garden[ia][ja] && garden[row][column] == garden[ib][jb] && garden[row][column] != garden[ic][jc] {
+			} else if !differs(ia, ja) && !differs(ib, jb) && differs(ic, jc) {
 				corners++
 			}
 		} else if !util.RangeIsValid(garden, ia, ja) && util.RangeIsValid(garden, ib, jb) {
-			if garden[row][column] != garden[ib][jb] {
+			if differs(ib, jb) {
 				corners++
 			}
 		} else if !util.RangeIsValid(garden, ib, jb) && util.RangeIsValid(garden, ia, ja) {
-			if garden[row][column] != garden[ia][ja] {
+			if differs(ia, ja) {
 				corners++
 			}
 		}
 	}
 
-	// Perimeter up.
-	calculatePerimeter(-1, 0)
-	// Perimeter right.
-	calculatePerimeter(0, 1)
-	// Perimeter down.
-	calculatePerimeter(1, 0)
-	// Perimeter left.
-	calculatePerimeter(0, -1)
+	for _, direction := range [][]int{{1, 0}, {0, 1}, {-1, 0}, {0, -1}} {
+		calculatePerimeter(direction[0], direction[1])
+	}
 
-	// Corner left-up.
-	calculateCorners(-1, -1)
-	// Corner up-right.
-	calculateCorners(-1, 1)
-	// Corner right-down.
-	calculateCorners(1, 1)
-	// Corner down-left.
-	calculateCorners(1, -1)
+	for _, direction := range [][]int{{1, 1}, {1, -1}, {-1, 1}, {-1, -1}} {
+		calculateCorners(direction[0], direction[1])
+	}
 
 	return 1, perimeter, corners
 }
