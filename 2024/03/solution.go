@@ -2,6 +2,7 @@ package solution
 
 import (
 	"advent-of-code/challenge"
+	"advent-of-code/util"
 	"regexp"
 	"strconv"
 )
@@ -11,7 +12,7 @@ func init() {
 }
 
 func MullItOver(filePath string) (result challenge.Result, err error) {
-	corruptedMemory, err := Parse(filePath)
+	corruptedMemory, err := util.ParseLine(filePath)
 	if err != nil {
 		return nil, err
 	}
