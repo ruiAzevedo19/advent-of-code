@@ -15,12 +15,15 @@ func GardenGroups(filePath string) (result challenge.Result, err error) {
 		return nil, err
 	}
 
+	price, priceDiscount := calculatePrice(garden)
+
 	return &Result{
-		Price: calculatePrice(garden),
+		Price:         price,
+		PriceDiscount: priceDiscount,
 	}, nil
 }
 
-func calculatePrice(garden [][]rune) (price int) {
+func calculatePrice(garden [][]rune) (price int, priceDiscount int) {
 	visited := util.EmptyGrid[bool](len(garden), len(garden[0]))
 
 	for i := range garden {
@@ -28,42 +31,72 @@ func calculatePrice(garden [][]rune) (price int) {
 			if visited[i][j] {
 				continue
 			}
-			area, perimeter := group(garden, i, j, garden[i][j], visited)
+			area, perimeter, corners := group(garden, i, j, garden[i][j], visited)
 			price += area * perimeter
+			priceDiscount += area * corners
 		}
 	}
 
-	return price
+	return price, priceDiscount
 }
 
-func group(garden [][]rune, row int, column int, plant rune, visited [][]bool) (area int, perimeter int) {
+func group(garden [][]rune, row int, column int, plant rune, visited [][]bool) (area int, perimeter int, corners int) {
 	if !util.RangeIsValid(garden, row, column) {
-		return 0, 0
+		return 0, 0, 0
 	}
 	if visited[row][column] || garden[row][column] != plant {
-		return 0, 0
+		return 0, 0, 0
 	}
 
 	visited[row][column] = true
-	area, perimeter = calculateAreaPerimeter(garden, row, column)
+	area, perimeter, corners = calculateAreaPerimeter(garden, row, column)
 
-	areaUp, perimeterUp := group(garden, row-1, column, plant, visited)
-	areaRight, perimeterRight := group(garden, row, column+1, plant, visited)
-	areaDown, perimeterDown := group(garden, row+1, column, plant, visited)
-	areaLeft, perimeterLeft := group(garden, row, column-1, plant, visited)
+	areaUp, perimeterUp, cornersUp := group(garden, row-1, column, plant, visited)
+	areaRight, perimeterRight, cornersRight := group(garden, row, column+1, plant, visited)
+	areaDown, perimeterDown, cornersDown := group(garden, row+1, column, plant, visited)
+	areaLeft, perimeterLeft, cornersLeft := group(garden, row, column-1, plant, visited)
 
 	area += areaUp + areaRight + areaDown + areaLeft
 	perimeter += perimeterUp + perimeterRight + perimeterDown + perimeterLeft
+	corners += cornersUp + cornersRight + cornersDown + cornersLeft
 
-	return area, perimeter
+	return area, perimeter, corners
 }
 
-func calculateAreaPerimeter(garden [][]rune, row int, column int) (area int, perimeter int) {
+func calculateAreaPerimeter(garden [][]rune, row int, column int) (area int, perimeter int, corners int) {
 	calculatePerimeter := func(dx int, dy int) {
+		// Calculate perimenter.
 		if !util.RangeIsValid(garden, row+dx, column+dy) {
 			perimeter++
 		} else if garden[row][column] != garden[row+dx][column+dy] {
 			perimeter++
+		}
+	}
+	calculateCorners := func(dx int, dy int) {
+		ia, ja := row+dx, column
+		ib, jb := row, column+dy
+		ic, jc := row+dx, column+dy
+
+		if !util.RangeIsValid(garden, ia, ja) && !util.RangeIsValid(garden, ib, jb) {
+			corners++
+
+			return
+		}
+
+		if util.RangeIsValid(garden, ia, ja) && util.RangeIsValid(garden, ib, jb) && util.RangeIsValid(garden, ic, jc) {
+			if garden[row][column] != garden[ia][ja] && garden[row][column] != garden[ib][jb] {
+				corners++
+			} else if garden[row][column] == garden[ia][ja] && garden[row][column] == garden[ib][jb] && garden[row][column] != garden[ic][jc] {
+				corners++
+			}
+		} else if !util.RangeIsValid(garden, ia, ja) && util.RangeIsValid(garden, ib, jb) {
+			if garden[row][column] != garden[ib][jb] {
+				corners++
+			}
+		} else if !util.RangeIsValid(garden, ib, jb) && util.RangeIsValid(garden, ia, ja) {
+			if garden[row][column] != garden[ia][ja] {
+				corners++
+			}
 		}
 	}
 
@@ -73,8 +106,17 @@ func calculateAreaPerimeter(garden [][]rune, row int, column int) (area int, per
 	calculatePerimeter(0, 1)
 	// Perimeter down.
 	calculatePerimeter(1, 0)
-	// Perimeter right.
+	// Perimeter left.
 	calculatePerimeter(0, -1)
 
-	return 1, perimeter
+	// Corner left-up.
+	calculateCorners(-1, -1)
+	// Corner up-right.
+	calculateCorners(-1, 1)
+	// Corner right-down.
+	calculateCorners(1, 1)
+	// Corner down-left.
+	calculateCorners(1, -1)
+
+	return 1, perimeter, corners
 }

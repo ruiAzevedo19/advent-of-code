@@ -19,7 +19,8 @@ func TestGardenGroups(t *testing.T) {
 		Solution: GardenGroups,
 
 		ExpectedResult: &Result{
-			Price: 1930,
+			Price:         1930,
+			PriceDiscount: 1206,
 		},
 	})
 }
