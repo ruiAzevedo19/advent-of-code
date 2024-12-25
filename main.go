@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"advent-of-code/challenge"
 	_ "advent-of-code/register"
@@ -23,10 +24,13 @@ func main() {
 		log.Fatal(err)
 	}
 
+	start := time.Now()
 	result, err := solution(inputFilePath)
+	end := time.Since(start)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println(result)
+	fmt.Printf("Execution time: %fs\n", end.Seconds())
 }
