@@ -25,4 +25,4 @@ go.work.sum
 .env
 
 # Ignore the complex testdata
-**/testdata/complex.txt
+**/testdata
