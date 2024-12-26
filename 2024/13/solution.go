@@ -3,6 +3,7 @@ package solution
 import (
 	"advent-of-code/challenge"
 	"advent-of-code/util"
+	"math"
 )
 
 func init() {
@@ -21,8 +22,17 @@ func ClawContraption(filePath string) (result challenge.Result, err error) {
 		return nil, err
 	}
 
+	tokens := clawContraption(machines)
+
+	for _, machine := range machines {
+		machine.Prize.Row += 10000000000000
+		machine.Prize.Column += 10000000000000
+	}
+	tokensHigherPrize := clawContraptionCramerRule(machines)
+
 	return &Result{
-		Tokens: clawContraption(machines),
+		Tokens:            tokens,
+		TokensHigherPrize: tokensHigherPrize,
 	}, nil
 }
 
@@ -40,6 +50,28 @@ LOOP:
 					continue LOOP
 				}
 			}
+		}
+	}
+
+	return tokens
+}
+
+func clawContraptionCramerRule(machines []*Machine) (tokens int) {
+	for _, machine := range machines {
+		ax, ay := float64(machine.ButtonA.Row), float64(machine.ButtonA.Column)
+		bx, by := float64(machine.ButtonB.Row), float64(machine.ButtonB.Column)
+		px, py := float64(machine.Prize.Row), float64(machine.Prize.Column)
+
+		det := ax*by - ay*bx
+		if det == 0.0 {
+			continue
+		}
+
+		buttonA := (px*by - py*bx) / det
+		buttonB := (ax*py - ay*px) / det
+
+		if buttonA == math.Trunc(buttonA) && buttonB == math.Trunc(buttonB) {
+			tokens += int(3*buttonA + buttonB)
 		}
 	}
 
