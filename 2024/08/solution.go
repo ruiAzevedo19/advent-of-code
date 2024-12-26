@@ -39,8 +39,8 @@ func resonantCollinearity(grid [][]rune) (antinodeLocations int, antinodeLocatio
 			}
 
 			currentCoordinate := &util.Coordinate{
-				Row:    row,
-				Column: column,
+				X: row,
+				Y: column,
 			}
 
 			coordinates := findFrequencies(grid, grid[row][column])
@@ -67,8 +67,8 @@ func findFrequencies(grid [][]rune, frequency rune) (coordinates []*util.Coordin
 		for column := range grid[row] {
 			if grid[row][column] == frequency {
 				coordinates = append(coordinates, &util.Coordinate{
-					Row:    row,
-					Column: column,
+					X: row,
+					Y: column,
 				})
 			}
 		}
@@ -78,24 +78,24 @@ func findFrequencies(grid [][]rune, frequency rune) (coordinates []*util.Coordin
 }
 
 func createAntinodes(antinodes [][]rune, x *util.Coordinate, y *util.Coordinate) (numberOfAntinodeLocations int) {
-	dx := x.Row - y.Row
-	dy := x.Column - y.Column
+	dx := x.X - y.X
+	dy := x.Y - y.Y
 
 	antinodeX := &util.Coordinate{
-		Row:    x.Row + dx,
-		Column: x.Column + dy,
+		X: x.X + dx,
+		Y: x.Y + dy,
 	}
 	antinodeY := &util.Coordinate{
-		Row:    y.Row - dx,
-		Column: y.Column - dy,
+		X: y.X - dx,
+		Y: y.Y - dy,
 	}
 
-	if antinodeX.IsValid(antinodes) && antinodes[antinodeX.Row][antinodeX.Column] != ANTINODE {
-		antinodes[antinodeX.Row][antinodeX.Column] = ANTINODE
+	if antinodeX.IsValid(antinodes) && antinodes[antinodeX.X][antinodeX.Y] != ANTINODE {
+		antinodes[antinodeX.X][antinodeX.Y] = ANTINODE
 		numberOfAntinodeLocations++
 	}
-	if antinodeY.IsValid(antinodes) && antinodes[antinodeY.Row][antinodeY.Column] != ANTINODE {
-		antinodes[antinodeY.Row][antinodeY.Column] = ANTINODE
+	if antinodeY.IsValid(antinodes) && antinodes[antinodeY.X][antinodeY.Y] != ANTINODE {
+		antinodes[antinodeY.X][antinodeY.Y] = ANTINODE
 		numberOfAntinodeLocations++
 	}
 
@@ -103,35 +103,35 @@ func createAntinodes(antinodes [][]rune, x *util.Coordinate, y *util.Coordinate)
 }
 
 func createAntinodesUpdatedModel(antinodes [][]rune, x *util.Coordinate, y *util.Coordinate) (numberOfAntinodeLocations int) {
-	dx := x.Row - y.Row
-	dy := x.Column - y.Column
+	dx := x.X - y.X
+	dy := x.Y - y.Y
 
 	antinodeX := &util.Coordinate{}
 	for i := 1; ; i++ {
-		antinodeX.Row = x.Row + i*dx
-		antinodeX.Column = x.Column + i*dy
+		antinodeX.X = x.X + i*dx
+		antinodeX.Y = x.Y + i*dy
 
 		if !antinodeX.IsValid(antinodes) {
 			break
 		}
 
-		if antinodes[antinodeX.Row][antinodeX.Column] != ANTINODE {
-			antinodes[antinodeX.Row][antinodeX.Column] = ANTINODE
+		if antinodes[antinodeX.X][antinodeX.Y] != ANTINODE {
+			antinodes[antinodeX.X][antinodeX.Y] = ANTINODE
 			numberOfAntinodeLocations++
 		}
 	}
 
 	antinodeY := &util.Coordinate{}
 	for i := 1; ; i++ {
-		antinodeY.Row = y.Row - i*dx
-		antinodeY.Column = y.Column - i*dy
+		antinodeY.X = y.X - i*dx
+		antinodeY.Y = y.Y - i*dy
 
 		if !antinodeY.IsValid(antinodes) {
 			break
 		}
 
-		if antinodes[antinodeY.Row][antinodeY.Column] != ANTINODE {
-			antinodes[antinodeY.Row][antinodeY.Column] = ANTINODE
+		if antinodes[antinodeY.X][antinodeY.Y] != ANTINODE {
+			antinodes[antinodeY.X][antinodeY.Y] = ANTINODE
 			numberOfAntinodeLocations++
 		}
 	}

@@ -66,7 +66,7 @@ func extractCoordinates(re *regexp.Regexp, entry string) (coordinate *util.Coord
 	}
 
 	return &util.Coordinate{
-		Row:    row,
-		Column: column,
+		X: row,
+		Y: column,
 	}, nil
 }

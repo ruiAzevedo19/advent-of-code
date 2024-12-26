@@ -35,58 +35,58 @@ func TestParse(t *testing.T) {
 		ExpectedMachines: []*Machine{
 			{
 				ButtonA: &util.Coordinate{
-					Row:    94,
-					Column: 34,
+					X: 94,
+					Y: 34,
 				},
 				ButtonB: &util.Coordinate{
-					Row:    22,
-					Column: 67,
+					X: 22,
+					Y: 67,
 				},
 				Prize: &util.Coordinate{
-					Row:    8400,
-					Column: 5400,
+					X: 8400,
+					Y: 5400,
 				},
 			},
 			{
 				ButtonA: &util.Coordinate{
-					Row:    26,
-					Column: 66,
+					X: 26,
+					Y: 66,
 				},
 				ButtonB: &util.Coordinate{
-					Row:    67,
-					Column: 21,
+					X: 67,
+					Y: 21,
 				},
 				Prize: &util.Coordinate{
-					Row:    12748,
-					Column: 12176,
+					X: 12748,
+					Y: 12176,
 				},
 			},
 			{
 				ButtonA: &util.Coordinate{
-					Row:    17,
-					Column: 86,
+					X: 17,
+					Y: 86,
 				},
 				ButtonB: &util.Coordinate{
-					Row:    84,
-					Column: 37,
+					X: 84,
+					Y: 37,
 				},
 				Prize: &util.Coordinate{
-					Row:    7870,
-					Column: 6450,
+					X: 7870,
+					Y: 6450,
 				},
 			},
 			{
 				ButtonA: &util.Coordinate{
-					Row:    69,
-					Column: 23,
+					X: 69,
+					Y: 23,
 				},
 				ButtonB: &util.Coordinate{
-					Row:    27,
-					Column: 71,
+					X: 27,
+					Y: 71,
 				},
 				Prize: &util.Coordinate{
-					Row:    18641,
-					Column: 10279,
+					X: 18641,
+					Y: 10279,
 				},
 			},
 		},

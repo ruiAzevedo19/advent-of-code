@@ -25,8 +25,8 @@ func ClawContraption(filePath string) (result challenge.Result, err error) {
 	tokens := clawContraption(machines)
 
 	for _, machine := range machines {
-		machine.Prize.Row += 10000000000000
-		machine.Prize.Column += 10000000000000
+		machine.Prize.X += 10000000000000
+		machine.Prize.Y += 10000000000000
 	}
 	tokensHigherPrize := clawContraptionCramerRule(machines)
 
@@ -41,10 +41,10 @@ LOOP:
 	for _, machine := range machines {
 		for a := 0; a < 100; a++ {
 			for b := 0; b < 100; b++ {
-				x := a*machine.ButtonA.Row + b*machine.ButtonB.Row
-				y := a*machine.ButtonA.Column + b*machine.ButtonB.Column
+				x := a*machine.ButtonA.X + b*machine.ButtonB.X
+				y := a*machine.ButtonA.Y + b*machine.ButtonB.Y
 
-				if x == machine.Prize.Row && y == machine.Prize.Column {
+				if x == machine.Prize.X && y == machine.Prize.Y {
 					tokens += 3*a + b
 
 					continue LOOP
@@ -58,9 +58,9 @@ LOOP:
 
 func clawContraptionCramerRule(machines []*Machine) (tokens int) {
 	for _, machine := range machines {
-		ax, ay := float64(machine.ButtonA.Row), float64(machine.ButtonA.Column)
-		bx, by := float64(machine.ButtonB.Row), float64(machine.ButtonB.Column)
-		px, py := float64(machine.Prize.Row), float64(machine.Prize.Column)
+		ax, ay := float64(machine.ButtonA.X), float64(machine.ButtonA.Y)
+		bx, by := float64(machine.ButtonB.X), float64(machine.ButtonB.Y)
+		px, py := float64(machine.Prize.X), float64(machine.Prize.Y)
 
 		det := ax*by - ay*bx
 		if det == 0.0 {
