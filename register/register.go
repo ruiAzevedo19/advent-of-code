@@ -14,4 +14,5 @@ import ( // Register solutions.
 	_ "advent-of-code/2024/11"
 	_ "advent-of-code/2024/12"
 	_ "advent-of-code/2024/13"
+	_ "advent-of-code/2024/14"
 )
